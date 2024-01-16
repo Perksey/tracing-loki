@@ -448,8 +448,7 @@ pub struct BackgroundTask {
     backoff_count: u32,
     backoff: Option<Pin<Box<tokio::time::Sleep>>>,
     quitting: bool,
-    send_task:
-        Option<Pin<Box<dyn Future<Output = Result<(), Box<dyn error::Error>>> + Send + 'static>>>,
+    send_task: Option<Pin<Box<dyn Future<Output = Result<(), Box<dyn error::Error>>> + 'static>>>,
 }
 
 impl BackgroundTask {
