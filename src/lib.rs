@@ -473,14 +473,6 @@ impl BackgroundTask {
                     env!("CARGO_PKG_VERSION")
                 ))
                 .default_headers(http_headers)
-                .redirect(reqwest::redirect::Policy::custom(|a| {
-                    let status = a.status().as_u16();
-                    if status == 302 || status == 303 {
-                        let to = a.url().clone();
-                        return a.error(BadRedirect { status, to });
-                    }
-                    reqwest::redirect::Policy::default().redirect(a)
-                }))
                 .build()
                 .expect("reqwest client builder"),
             backoff_count: 0,
